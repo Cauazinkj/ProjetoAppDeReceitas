@@ -47,9 +47,9 @@ public class RecipeController {
 
     @Operation(
             summary = "Criar receita",
-            description = "Cria uma nova receita e suas informações pelo id"
+            description = "Cria uma nova receita"
     )
-    @PostMapping("/{id}")
+    @PostMapping("/new/1")
     public Recipe criarReceita(@RequestBody Recipe recipe){
         return recipeService.salvar(recipe);
     }

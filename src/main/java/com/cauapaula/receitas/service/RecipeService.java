@@ -36,11 +36,22 @@ public class RecipeService {
     public Recipe atualizar(Long id, Recipe recipeAtualizada){
         return recipeRepository.findById(id)
                 .map(recipe -> {
-                    recipe.setTitulo(recipeAtualizada.getTitulo());
-                    recipe.setDescricao(recipeAtualizada.getDescricao());
-                    recipe.setCategoria(recipeAtualizada.getCategoria());
-                    recipe.setTempoDePreparo(recipeAtualizada.getTempoDePreparo());
-                    recipe.setImagemUrl(recipeAtualizada.getImagemUrl());
+
+                    if(recipe.getTitulo() != null){
+                        recipe.setTitulo(recipeAtualizada.getTitulo());
+                    }
+                    if(recipe.getDescricao() != null){
+                        recipe.setDescricao(recipeAtualizada.getDescricao());
+                    }
+                    if(recipe.getCategoria() != null){
+                        recipe.setCategoria(recipeAtualizada.getCategoria());
+                    }
+                    if(recipe.getTempoDePreparo() != null){
+                        recipe.setTempoDePreparo(recipeAtualizada.getTempoDePreparo());
+                    }
+                    if(recipe.getImagemUrl() != null){
+                        recipe.setImagemUrl(recipeAtualizada.getImagemUrl());
+                    }
 
                     return recipeRepository.save(recipe);
                 }).orElseThrow(() -> new RuntimeException("Receita não encontrada"));
