@@ -3,10 +3,12 @@ package com.cauapaula.receitas.service;
 import com.cauapaula.receitas.dto.OnlyRecipeDTO;
 import com.cauapaula.receitas.model.Recipe;
 import com.cauapaula.receitas.repository.RecipeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class RecipeService {
 
     private final RecipeRepository recipeRepository;
@@ -15,7 +17,7 @@ public class RecipeService {
         this.recipeRepository = recipeRepository;
     }
 
-    public List<OnlyRecipeDTO> listarTodas(){
+    public List<Recipe> listarTodas(){
         return recipeRepository.findAll();
     }
 

@@ -1,17 +1,12 @@
 package com.cauapaula.receitas.controller;
 
-import com.cauapaula.receitas.dto.OnlyRecipeDTO;
 import com.cauapaula.receitas.model.Recipe;
 import com.cauapaula.receitas.service.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -24,18 +19,18 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    //API para listar todas as receitas
+    // API para listar todas as receitas
 
     @Operation(
             summary = "Lista receitas completas",
             description = "Retorna todas as receitas e detalhes disponíveis"
     )
     @GetMapping
-    public List<OnlyRecipeDTO> listarTodos() {
+    public List<Recipe> listarTodos() {
         return recipeService.listarTodas();
     }
 
-    //API para buscar por ID
+    // API para buscar por ID
 
     @Operation(
             summary = "Buscar por id",
@@ -48,7 +43,7 @@ public class RecipeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    //Api para criar uma receita
+    // API para criar uma receita
 
     @Operation(
             summary = "Criar receita",
@@ -59,7 +54,7 @@ public class RecipeController {
         return recipeService.salvar(recipe);
     }
 
-    //API para atualizar uma receita
+    // API para atualizar uma receita
 
     @Operation(
             summary = "Atualiza uma receita",
@@ -69,11 +64,24 @@ public class RecipeController {
     public ResponseEntity<?> atualizarReceita(
             @PathVariable Long id,
             @RequestBody Recipe recipeAtualizada){
-        try{
+        try {
             Recipe updateRecipe = recipeService.atualizar(id, recipeAtualizada);
             return ResponseEntity.ok(updateRecipe);
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // API de deletar receitas
+
+    @Operation(
+            summary = "Deleta uma receita",
+            description = "Deleta uma receita com base no id"
+    )
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deletarReceita(@PathVariable Long id){
+        recipeService.deletarPorId(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
