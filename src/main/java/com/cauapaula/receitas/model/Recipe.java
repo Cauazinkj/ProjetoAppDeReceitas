@@ -3,8 +3,11 @@ package com.cauapaula.receitas.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
-//lambok faz os getters e setters
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,23 +16,23 @@ import lombok.Setter;
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id")
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
-    @Column (name = "titulo")
     private String titulo;
-
-    @Column (name = "descricao")
     private String descricao;
 
-    @Column (name = "categoria")
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     private String categoria;
-
-    @Column(name = "tempo_preparo")
     private Integer tempoDePreparo;
-
-    @Column(name = "imagem_url")
     private String imagemUrl;
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RecipeIngredient> ingredientes = new ArrayList<>();
 
 }

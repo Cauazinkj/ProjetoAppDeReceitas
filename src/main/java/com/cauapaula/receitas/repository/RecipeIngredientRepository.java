@@ -6,8 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredient, RecipeIngredientId> {
-    List<RecipeIngredient> findByRecipeId(Long recipeId); // aqui funciona, pois RecipeIngredientId tem recipeId
+
+    List<RecipeIngredient> findByRecipe_Id(UUID recipeId);
 }

@@ -1,4 +1,4 @@
-package com.cauapaula.receitas.dto;
+package com.cauapaula.receitas.config;
 
 import lombok.Getter;
 import lombok.Setter;

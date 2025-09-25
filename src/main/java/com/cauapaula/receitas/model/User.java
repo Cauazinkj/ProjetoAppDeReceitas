@@ -1,10 +1,10 @@
 package com.cauapaula.receitas.model;
 
+import java.util.UUID;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-//lambok faz os getters e setters
+import org.hibernate.annotations.GenericGenerator;
 
 @Getter
 @Setter
@@ -13,8 +13,9 @@ import lombok.Setter;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @Column (name = "nome", nullable = false)
     private String nome;
@@ -22,7 +23,6 @@ public class User {
     @Column (unique = true, nullable = false)
     private String email;
 
-    @Column (name = "senha", nullable = false)
-    private String senha;
+    private String password;
 
 }

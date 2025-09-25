@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-//lambok faz os getters e setters
-
 @Getter
 @Setter
 @Entity
@@ -13,7 +11,7 @@ import lombok.Setter;
 public class RecipeIngredient {
 
     @EmbeddedId
-    private RecipeIngredientId id;
+    private RecipeIngredientId id = new RecipeIngredientId();
 
     @ManyToOne
     @MapsId("recipeId")
@@ -27,5 +25,4 @@ public class RecipeIngredient {
 
     @Column(name = "quantidade", nullable = false)
     private String quantidade;
-
 }

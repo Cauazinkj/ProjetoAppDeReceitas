@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-//lambok faz os getters e setters
-
 @Getter
 @Setter
 @Entity
@@ -23,7 +21,4 @@ public class Favorite {
     @ManyToOne
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
-
-
-
 }

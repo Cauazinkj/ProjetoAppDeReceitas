@@ -4,7 +4,8 @@ import com.cauapaula.receitas.model.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface RecipeRepository extends JpaRepository<Recipe, Long> {
+import java.util.UUID;
 
+@Repository
+public interface RecipeRepository extends JpaRepository<Recipe, UUID>{
 }
