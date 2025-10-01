@@ -13,7 +13,8 @@ import org.hibernate.annotations.GenericGenerator;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
@@ -23,6 +24,7 @@ public class User {
     @Column (unique = true, nullable = false)
     private String email;
 
+    @Column (unique = false, nullable = false)
     private String password;
 
 }

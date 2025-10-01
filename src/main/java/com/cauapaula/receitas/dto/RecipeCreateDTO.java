@@ -17,5 +17,6 @@ public class RecipeCreateDTO {
     private Integer tempoDePreparo;
     private String imagemUrl;
     private List<IngredientQuantityDTO> ingredientes;
+    private List<RecipeStepDTO> passos;
 }
 

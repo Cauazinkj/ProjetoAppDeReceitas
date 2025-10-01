@@ -2,9 +2,11 @@ package com.cauapaula.receitas.service;
 
 import com.cauapaula.receitas.dto.IngredientQuantityDTO;
 import com.cauapaula.receitas.dto.RecipeCreateDTO;
+import com.cauapaula.receitas.dto.RecipeStepDTO;
 import com.cauapaula.receitas.model.*;
 import com.cauapaula.receitas.repository.IngredientRepository;
 import com.cauapaula.receitas.repository.RecipeRepository;
+import com.cauapaula.receitas.repository.RecipeStepRepository;
 import com.cauapaula.receitas.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,13 +22,17 @@ public class RecipeService {
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
     private final UserRepository userRepository;
+    private final RecipeStepRepository recipeStepRepository;
 
     public RecipeService(RecipeRepository recipeRepository,
                          IngredientRepository ingredientRepository,
-                         UserRepository userRepository) {
+                         UserRepository userRepository,
+                         RecipeStepRepository recipeStepRepository) {
+
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.userRepository = userRepository;
+        this.recipeStepRepository = recipeStepRepository;
     }
 
     @Transactional
@@ -81,9 +86,20 @@ public class RecipeService {
             recipe = recipeRepository.save(recipe); // salva os ingredientes
         }
 
+        if(dto.getPassos() != null){
+            for(RecipeStepDTO passoDTO : dto.getPassos()){
+                RecipeStep passo = new RecipeStep();
+                passo.setRecipe(recipe);
+                passo.setOrdem(passoDTO.getOrdem());
+                passo.setDescricao(passoDTO.getDescricao());
+
+                recipe.getPassos().add(passo);
+            }
+            recipeStepRepository.saveAll(recipe.getPassos());
+        }
+
         return recipe;
     }
-
 
     public List<Recipe> listarTodas () {
         return recipeRepository.findAll();
@@ -118,6 +134,8 @@ public class RecipeService {
                 setTempoDePreparo(recipeAtualizada.getTempoDePreparo());
         if (recipeAtualizada.getImagemUrl() != null) recipe.
                 setImagemUrl(recipeAtualizada.getImagemUrl());
+        if (recipeAtualizada.getPassos() != null) recipe.
+                setPassos(recipeAtualizada.getPassos());
 
         return recipeRepository.save(recipe);
     }
